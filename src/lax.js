@@ -4,11 +4,11 @@
 //
 // Licensed under the terms of the MIT license.
 //
-// You may use it in your theme if you credit me. 
+// You may use it in your theme if you credit me.
 // It is also free to use on any individual website.
 //
 // Exception:
-// The only restriction is to not publish any  
+// The only restriction is to not publish any
 // extension for browsers or native application
 // without getting a written permission first.
 //
@@ -160,7 +160,7 @@
 
     lax.setup = (o={}) => {
       lax.breakpoints = o.breakpoints || {}
-      
+
       lax.selector = o.selector || '.lax'
       lax.populateElements()
     }
@@ -214,7 +214,7 @@
                   }
               }
           })
-	  
+
           const currentAnchor = el.getAttribute("data-lax-anchor")
           if(!currentAnchor || currentAnchor === "") el.setAttribute("data-lax-anchor", "self")
           el.attributes.removeNamedItem(a.name)
@@ -230,7 +230,7 @@
       if(el.attributes["data-lax-use-gpu"]) el.attributes.removeNamedItem("data-lax-use-gpu")
 
       // optmise off screen
-      o.optimise = false 
+      o.optimise = false
       if(el.attributes["data-lax-optimize"] && el.attributes["data-lax-optimize"].value === 'true') {
         o.optimise = true
         const bounds = el.getBoundingClientRect()
@@ -257,6 +257,8 @@
               .replace(/vh/g, window.innerHeight)
               .replace(/elh/g, el.clientHeight)
               .replace(/elw/g, el.clientWidth)
+              .replace(/ah/g, o["data-lax-anchor"].clientHeight)
+              .replace(/aw/g, o["data-lax-anchor"].clientWidth)
               .replace(/\s+/g," ")
 
             const [arrString, optionString] = tString.split("|")
@@ -266,21 +268,21 @@
               optionString.split(" ").forEach((o) => {
                 const [key, val] = o.split("=")
                 options[key] = key && fnOrVal(val)
-              }) 
+              })
             }
 
             const name = b[0]
-            const valueMap = arrString.split(",").map((x) => { 
+            const valueMap = arrString.split(",").map((x) => {
                 return x.trim().split(" ").map(fnOrVal)
               }).sort((a,b) => {
-                return a[0] - b[0]  
+                return a[0] - b[0]
               })
 
             if(!o.transforms[name]) {
               o.transforms[name] = {}
             }
-            
-            o.transforms[name][breakpoint] = { valueMap, options } 
+
+            o.transforms[name][breakpoint] = { valueMap, options }
           }
         }
       }
@@ -317,7 +319,7 @@
       lax.elements.forEach((o) => {
         lax.calcTransforms(o)
         lax.updateElement(o)
-      }) 
+      })
 
       currentBreakpoint = lax.getCurrentBreakPoint()
     }
@@ -382,7 +384,7 @@
       }
 
       if(style.opacity === 0) { // if opacity 0 don't update
-        el.style.opacity = 0 
+        el.style.opacity = 0
       } else {
         for(let k in style) {
           el.style[k] = style[k]
